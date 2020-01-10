@@ -13,12 +13,17 @@ Config.set('graphics', 'width', 284)
 Config.set('graphics', 'height', 454)
 
 class CalcApp(App):
-    def clear (self):
-        pass
-    def clear_all (self):
-        pass
+    def clear (self, instance):
+        self.сurrent_number = '0'
+        self.update_label() 
+    def clear_all (self, instance):
+        self.formula = ''
+        self.сurrent_number = '0'
+        self.input_label.text = ''
+        self.update_label()   
 
     def add_operation(self, instance):
+        self.formula += str(self.сurrent_number)
         if ( str(instance.text).lower() == 'x'):
             self.formula += '*'
         else:
@@ -31,16 +36,15 @@ class CalcApp(App):
     def add_formula(self, instance):
         if (self.сurrent_number == '0'):
                 self.сurrent_number = ''
-        self.formula += str(instance.text)
         self.сurrent_number += str(instance.text)
         self.update_label()
 
     def calc_result(self, instance):
+        self.formula += str(self.сurrent_number)
         self.input_label.text = self.formula
         self.result.text = str(eval(self.formula))
-        self.formula = self.result.text
+        self.сurrent_number = self.result.text
         self.formula = ''
-        self.сurrent_number = ''
 
     def build(self):
         self.сurrent_number = ''
