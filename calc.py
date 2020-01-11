@@ -13,6 +13,9 @@ Config.set('graphics', 'width', 284)
 Config.set('graphics', 'height', 454)
 
 class CalcApp(App):
+    def backspace (self, intance):
+        self.сurrent_number = self.сurrent_number[:-1]
+        self.update_label() 
     def clear (self, instance):
         self.сurrent_number = '0'
         self.update_label() 
@@ -32,6 +35,8 @@ class CalcApp(App):
         self.сurrent_number = '0'
         self.update_label()       
     def update_label(self):
+        if (self.сurrent_number == ''):
+            self.сurrent_number = '0'
         self.result.text = self.сurrent_number     
     def add_formula(self, instance):
         if (self.сurrent_number == '0'):
@@ -53,7 +58,7 @@ class CalcApp(App):
         input_panel = GridLayout(cols=4, size_hint=(None, None), size=(280, 350))
         result_panel = GridLayout(rows=2, size_hint=(None, None), size=(280, 100))
 
-        self.input_label = Label(text='1',
+        self.input_label = Label(text='',
             font_size = 40,
             size_hint=(None, None),
             size=(280, 50),
@@ -70,7 +75,7 @@ class CalcApp(App):
         result_panel.add_widget( self.input_label )        
         result_panel.add_widget( self.result )
 
-        input_panel.add_widget( Button(text = '<', on_press = self.add_formula) )
+        input_panel.add_widget( Button(text = '<', on_press = self.backspace) )
         input_panel.add_widget( Button(text = 'CE', on_press = self.clear) )
         input_panel.add_widget( Button(text = 'C', on_press = self.clear_all) )
         input_panel.add_widget( Button(text = '/', on_press = self.add_operation) )
